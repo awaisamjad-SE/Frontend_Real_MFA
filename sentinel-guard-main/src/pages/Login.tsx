@@ -125,10 +125,15 @@ export default function Login() {
       // Store device fingerprint for MFA verification
       localStorage.setItem('device_fingerprint', deviceData.fingerprint_hash);
 
-      // API expects nested device object
+      // Send both nested and flat device fields for backend compatibility.
       const response = await authService.login({
         identifier,
         password,
+        device_fingerprint: deviceData.fingerprint_hash,
+        device_name: deviceData.device_name,
+        device_type: deviceData.device_type,
+        browser: deviceData.browser,
+        os: deviceData.os,
         device: {
           fingerprint_hash: deviceData.fingerprint_hash,
           device_type: deviceData.device_type,

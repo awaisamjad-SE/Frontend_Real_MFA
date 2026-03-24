@@ -9,6 +9,7 @@ import { Label } from "@/components/ui/label";
 import { useDeviceData } from "@/context/AuthContext";
 import { authService } from "@/services/apiService";
 import { getErrorMessage } from "@/services/api";
+import { getDeviceData } from "@/utils/fingerprint";
 import { 
   Loader2, 
   Eye, 
@@ -86,18 +87,26 @@ export default function Register() {
     setLoading(true);
 
     try {
-      if (!deviceData) {
-        throw new Error("Device data not available. Please try again.");
-      }
+      const resolvedDeviceData = deviceData ?? await getDeviceData();
 
-      // Backend expects: password2 and flat device_fingerprint_hash
-      const response = await authService.register({
+      // Backend expects nested device object and password2.
+      const registerPayload = {
         email: formData.email,
         username: formData.username,
+        first_name: formData.first_name || undefined,
+        last_name: formData.last_name || undefined,
         password: formData.password,
         password2: formData.password2,
-        device_fingerprint_hash: deviceData.fingerprint_hash,
-      });
+        device: {
+          fingerprint_hash: resolvedDeviceData.fingerprint_hash,
+          device_type: resolvedDeviceData.device_type,
+          browser: resolvedDeviceData.browser,
+          os: resolvedDeviceData.os,
+          device_name: resolvedDeviceData.device_name,
+        },
+      };
+
+      const response = await authService.register(registerPayload);
 
       setUserId(response.id);
       toast({

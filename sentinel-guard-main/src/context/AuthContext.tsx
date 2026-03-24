@@ -73,8 +73,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (refreshToken) {
         await authService.logout(refreshToken);
       }
-    } catch (error) {
-      console.warn('Logout API call failed:', getErrorMessage(error));
+    } catch {
     } finally {
       localStorage.removeItem('access_token');
       localStorage.removeItem('refresh_token');
@@ -98,8 +97,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       const freshUser = await profileService.get();
       setUser(freshUser);
       localStorage.setItem('user', JSON.stringify(freshUser));
-    } catch (error) {
-      console.error('Failed to refresh user:', getErrorMessage(error));
+    } catch {
     }
   }, []);
 

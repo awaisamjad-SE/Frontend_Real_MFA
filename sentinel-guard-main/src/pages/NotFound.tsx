@@ -5,7 +5,7 @@ const NotFound = () => {
   const location = useLocation();
 
   useEffect(() => {
-    console.error("404 Error: User attempted to access non-existent route:", location.pathname);
+    // Keep side effect to react to path changes without logging in production.
   }, [location.pathname]);
 
   return (

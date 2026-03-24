@@ -115,7 +115,15 @@ export const authService = {
     username: string;
     password: string;
     password2: string;
-    device_fingerprint_hash: string;
+    first_name?: string;
+    last_name?: string;
+    device: {
+      fingerprint_hash: string;
+      device_type: string;
+      browser: string;
+      os: string;
+      device_name: string;
+    };
   }) => {
     const response = await api.post(ENDPOINTS.AUTH.REGISTER, data);
     return response.data;
@@ -124,13 +132,18 @@ export const authService = {
   login: async (data: {
     identifier: string;
     password: string;
-    device: {
+    device?: {
       fingerprint_hash: string;
       device_type: string;
       browser: string;
       os: string;
       device_name: string;
     };
+    device_fingerprint?: string;
+    device_name?: string;
+    device_type?: string;
+    browser?: string;
+    os?: string;
   }): Promise<LoginResponse> => {
     const response = await api.post(ENDPOINTS.AUTH.LOGIN, data);
     return response.data;
@@ -208,8 +221,6 @@ export const totpService = {
 
   setup: async (password: string): Promise<TOTPSetupResponse> => {
     const response = await api.post(ENDPOINTS.TOTP.SETUP, { password });
-    console.log("Raw API response:", response);
-    console.log("Response data:", response.data);
     return response.data;
   },
 

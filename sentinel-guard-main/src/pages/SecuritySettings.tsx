@@ -95,7 +95,6 @@ export default function SecuritySettings() {
     setProcessing(true);
     try {
       const data = await totpService.setup(setupPassword);
-      console.log("Setup response:", data);
       setSetupData(data);
       setPasswordDialogOpen(false);
       setSetupOpen(true);
