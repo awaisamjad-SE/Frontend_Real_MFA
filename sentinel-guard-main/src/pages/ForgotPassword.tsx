@@ -115,12 +115,14 @@ export default function ForgotPassword() {
     setLoading(true);
 
     try {
-      // Backend expects: { email, otp, new_password, confirm_password }
+      // Backend expects: { reset_token|user_id, otp_code, new_password, new_password2 }
       await passwordService.reset({
-        email: email,
-        otp: otpCode,
+        reset_token: resetToken || undefined,
+        user_id: userId || undefined,
+        otp_code: otpCode,
         new_password: newPassword,
-        confirm_password: confirmPassword,
+        new_password_confirm: confirmPassword,
+        new_password2: confirmPassword,
       });
       
       setStep("success");

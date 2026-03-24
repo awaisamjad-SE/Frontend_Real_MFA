@@ -258,10 +258,12 @@ export const passwordService = {
   },
 
   reset: async (data: {
-    email: string;
-    otp: string;
+    reset_token?: string;
+    user_id?: string;
+    otp_code: string;
     new_password: string;
-    confirm_password: string;
+    new_password_confirm: string;
+    new_password2?: string;
   }) => {
     const response = await api.post(ENDPOINTS.PASSWORD.RESET, data);
     return response.data;

@@ -60,9 +60,46 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
+## Deploy on Vercel
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+This app is ready for Vercel deployment as a Vite SPA.
+
+### 1) Push this repository to GitHub
+
+Make sure your latest code is pushed.
+
+### 2) Import project in Vercel
+
+- Go to Vercel and click New Project.
+- Import this repository.
+- Framework preset: Vite (auto-detected).
+
+### 3) Configure environment variables
+
+Add this variable in Vercel Project Settings -> Environment Variables:
+
+- `VITE_API_BASE_URL` = your production backend API base URL
+	- Example: `https://your-backend-domain.com/api`
+
+### 4) Build settings
+
+- Build command: `npm run build`
+- Output directory: `dist`
+
+### 5) Deploy
+
+Click Deploy.
+
+## Direct URL routing (no /login 404)
+
+This project includes a [vercel.json](vercel.json) rewrite rule so direct SPA routes work, including:
+
+- `/login`
+- `/register`
+- `/forgot-password`
+- `/dashboard`
+
+If you open a route directly in the browser, Vercel serves `index.html` and React Router handles the page correctly.
 
 ## Can I connect a custom domain to my Lovable project?
 

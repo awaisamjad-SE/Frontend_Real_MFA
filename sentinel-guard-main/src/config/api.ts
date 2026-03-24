@@ -1,7 +1,7 @@
 // API Configuration
 // Use environment variable in production (Vercel) and fall back to local dev URL.
 export const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:8000/api';
+  import.meta.env.VITE_API_BASE_URL || 'http://137.184.48.126:8000/api';
 
 // API Endpoints
 export const ENDPOINTS = {
